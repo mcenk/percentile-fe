@@ -29,6 +29,7 @@ function Copyright(props) {
     </Typography>
   );
 }
+// bu alana eklemeler yapilacak 
 
 const theme = createTheme(); 
 
