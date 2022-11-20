@@ -3,8 +3,9 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { Box, createTheme, InputAdornment, MenuItem, Paper, ThemeProvider } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import { DatePicker, LoadingButton } from '@mui/lab';
 import axios from 'axios';
+import dayjs, { Dayjs } from 'dayjs';
 
 
 
@@ -26,7 +27,9 @@ const theme = createTheme();
 
 export default function SaveChild()  {
 
-   const [firstName,setFirstName]= React.useState('');
+   const [name,setName]= React.useState('');
+
+  const [value, setValue] = React.useState(dayjs('2022-04-07'));
   // const [lastName, setLastName]=  React.useState('');
   const [gender, setgender] = React.useState('');
   const [birthday,setBirthday]= React.useState('');
@@ -62,8 +65,7 @@ export default function SaveChild()  {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const body= {
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
+      name: data.get('name'),
       gender,
       birthday,
       birthWeight: data.get('birthweight'),
@@ -99,28 +101,18 @@ export default function SaveChild()  {
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
             <TextField
               required
-              id="firstName"
-              name="firstName"
-              label={firstName}
+              id="name"
+              name="name"
+              label='Ad soyad'
               fullWidth
               autoComplete="given-name"
               variant="outlined"
             />
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              required
-              id="lastName"
-              name="lastName"
-              label="Soyad"
-              fullWidth
-              autoComplete="family-name"
-              variant="outlined"
-            />
-          </Grid>
+   
           <Grid item xs={12} sm={6}>
             <TextField
               id="outlined-select-gender"
@@ -139,18 +131,31 @@ export default function SaveChild()  {
           </Grid >
 
 
-          <Grid item xs={12} sm={6}>
+          {/* <Grid item xs={12} sm={6}>
             <TextField
               id="date"
               label="Doğum Tarihi"
               type="date"
               fullWidth
-
               defaultValue="2022-01-01"
               onChange={handleChangeDate}
               InputLabelProps={{
                 shrink: true,
               }}
+            /> */}
+
+
+          <Grid item xs={12} sm={6} >
+            <DatePicker
+              views={['year', 'month']}
+              label="Year and Month"
+              minDate={dayjs('2012-03-01')}
+              maxDate={dayjs('2023-06-01')}
+              value={value}
+              onChange={(newValue) => {
+                setValue(newValue);
+              }}
+              renderInput={(params) => <TextField {...params} helperText={null} />}
             />
 
           </Grid>

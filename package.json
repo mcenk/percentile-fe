@@ -20,7 +20,7 @@
       "react-app"
     ]
   },
-  "proxy": "http://localhost:8080",
+  "proxy": "http://localhost:8080/",
   "babel": {
     "presets": [
       "@babel/preset-react"
