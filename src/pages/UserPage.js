@@ -1,15 +1,17 @@
 import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
+import Avatar from '@mui/material/Avatar';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
 import { useState, useEffect } from 'react';
+
 // @mui
 import {
   Card,
   Table,
   Stack,
   Paper,
-  Avatar,
+
   Button,
   Popover,
   Checkbox,
@@ -39,10 +41,10 @@ import USERLIST from '../_mock/user';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Ad Soyad', alignRight: false },
-  { id: 'company', label: 'Yaş', alignRight: false },
-  { id: 'role', label: 'Cinsiyet', alignRight: false },
-  { id: 'isVerified', label: 'Doğum Tarihi', alignRight: false },
-  { id: 'status', label: 'Yaş', alignRight: false },
+  { id: 'company', label: 'Cinsiyet', alignRight: false },
+  { id: 'role', label: 'Doğum Tarihi', alignRight: false },
+  { id: 'isVerified', label: 'Yas', alignRight: false },
+  { id: 'status', label: 'Durum', alignRight: false },
   { id: '' },
 ];
 // const TABLE_HEAD = [
@@ -128,7 +130,7 @@ export default function UserPage() {
     const fetchData = async () =>{
       setLoading(true);
       try {
-        const {data: response} = await axios.get("http://localhost:8080/child");
+        const {data: response} = await axios.get("/child");
         setData(response);
         console.log(response)
         console.log(data)
@@ -141,28 +143,8 @@ export default function UserPage() {
     fetchData();
   }, []);
 
-  // const fetchData = () => {
-  //   axios.get("https://jsonplaceholder.typicode.com/posts")
-  //     .then((res) => {
-        
-  //       setPost(res.data)
-  //       console.log(res.data);
-  //     })}
-    
-    // useEffect (() => {
-    //   axios.get("http://localhost:8080/child")
 
-    //   .then((response) => {
 
-    //      console.log(response.data)
-    //     setPost(response.data)
-    //    });
-
-    //     console.log(post);
-
-    // }, []);
-
-    // useEffect(()=>{},[post])
 
 
 
@@ -177,18 +159,7 @@ export default function UserPage() {
     };
 
 
-    // GET REQ
 
-    // const getData= ()=>{
-    //   axios.get(`http://localhost:8080/child`)
-    //     .then(res => {
-    //       const persons = res.data;
-
-    //     })
-    // }
-
-
-    // TABLO SATIRLARINDAKI USER SECME KUTUCUKLARI ICIN
 
     const handleClick = (event, name) => {
       const selectedIndex = selected.indexOf(name);
@@ -263,11 +234,11 @@ export default function UserPage() {
                     onSelectAllClick={handleSelectAllClick}
                   />
                   <TableBody>
-                    {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-
-
-                      const { id, name, role, status, company, avatarUrl, isVerified } = row;
+                    {data.map((row) => {
+                      const { id, name, age, gender, birthday,isVerified } = row;
                       const selectedUser = selected.indexOf(name) !== -1;
+
+              
 
                       return (
                         <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
@@ -277,22 +248,24 @@ export default function UserPage() {
 
                           <TableCell component="th" scope="row" padding="none">
                             <Stack direction="row" alignItems="center" spacing={2}>
-                              <Avatar alt={name} src={avatarUrl} />
+                            <Avatar alt="Remy Sharp" src="../img/avatar_2.jpg"/>
                               <Typography variant="subtitle2" noWrap>
                                 {name}
                               </Typography>
                             </Stack>
                           </TableCell>
 
-                          <TableCell align="left">{company}</TableCell>
+                          <TableCell align="left">{gender}</TableCell>
 
-                          <TableCell align="left">{role}</TableCell>
+                          <TableCell align="left">{birthday}</TableCell>
+
+                          <TableCell align="left">{age}</TableCell>
 
                           <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
 
-                          <TableCell align="left">
+                          {/* <TableCell align="left">
                             <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
-                          </TableCell>
+                          </TableCell> */}
 
                           <TableCell align="right">
                             <IconButton size="large" color="inherit" onClick={handleOpenMenu}>

@@ -131,7 +131,7 @@ export default function SaveChild()  {
           </Grid >
 
 
-          {/* <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6}>
             <TextField
               id="date"
               label="Doğum Tarihi"
@@ -142,21 +142,10 @@ export default function SaveChild()  {
               InputLabelProps={{
                 shrink: true,
               }}
-            /> */}
-
-
-          <Grid item xs={12} sm={6} >
-            <DatePicker
-              views={['year', 'month']}
-              label="Year and Month"
-              minDate={dayjs('2012-03-01')}
-              maxDate={dayjs('2023-06-01')}
-              value={value}
-              onChange={(newValue) => {
-                setValue(newValue);
-              }}
-              renderInput={(params) => <TextField {...params} helperText={null} />}
             />
+
+
+
 
           </Grid>
           <Grid item xs={12} sm={6}>
