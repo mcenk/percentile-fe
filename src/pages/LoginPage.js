@@ -72,7 +72,6 @@ export default function LoginPage() {
 
     
          
-
             <Typography variant="body2" justifyContent='flex-end' sx={{ mt: 1, mb: 5, mr: 1 }}>
             Hesabınız yok mu? {''}
               <Link href= '/signup' variant="subtitle2">Kayıt olun!</Link>

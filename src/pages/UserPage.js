@@ -11,7 +11,7 @@ import {
   Table,
   Stack,
   Paper,
-
+  Box,
   Button,
   Popover,
   Checkbox,
@@ -127,10 +127,10 @@ export default function UserPage() {
 
 
   useEffect(() => {
-    const fetchData = async () =>{
+    const fetchData = async () => {
       setLoading(true);
       try {
-        const {data: response} = await axios.get("/child");
+        const { data: response } = await axios.get("/child");
         setData(response);
         console.log(response)
         console.log(data)
@@ -149,207 +149,213 @@ export default function UserPage() {
 
 
 
-    const handleSelectAllClick = (event) => {
-      if (event.target.checked) {
-        const newSelecteds = USERLIST.map((n) => n.name);
-        setSelected(newSelecteds);
-        return;
-      }
-      setSelected([]);
-    };
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelecteds = USERLIST.map((n) => n.name);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
 
 
 
 
-    const handleClick = (event, name) => {
-      const selectedIndex = selected.indexOf(name);
+  const handleClick = (event, name) => {
+    const selectedIndex = selected.indexOf(name);
 
-      // alert(post.gender);
-      let newSelected = [];
-      if (selectedIndex === -1) {
-        newSelected = newSelected.concat(selected, name);
-      } else if (selectedIndex === 0) {
-        newSelected = newSelected.concat(selected.slice(1));
-      } else if (selectedIndex === selected.length - 1) {
-        newSelected = newSelected.concat(selected.slice(0, -1));
-      } else if (selectedIndex > 0) {
-        newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-      }
-      setSelected(newSelected);
-    };
+    // alert(post.gender);
+    let newSelected = [];
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, name);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
+    }
+    setSelected(newSelected);
+  };
 
-    const handleChangePage = (event, newPage) => {
-      setPage(newPage);
-    };
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-    const handleChangeRowsPerPage = (event) => {
-      setPage(0);
-      setRowsPerPage(parseInt(event.target.value, 10));
-    };
+  const handleChangeRowsPerPage = (event) => {
+    setPage(0);
+    setRowsPerPage(parseInt(event.target.value, 10));
+  };
 
-    const handleFilterByName = (event) => {
+  const handleFilterByName = (event) => {
 
-      setPage(0);
-      setFilterName(event.target.value);
-    };
+    setPage(0);
+    setFilterName(event.target.value);
+  };
 
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - USERLIST.length) : 0;
 
-    const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
+  const filteredUsers = applySortFilter(USERLIST, getComparator(order, orderBy), filterName);
 
-    const isNotFound = !filteredUsers.length && !!filterName;
+  const isNotFound = !filteredUsers.length && !!filterName;
 
-    return (
-      <>
-        <Helmet>
-          <title> Kişiler | Percentile </title>
-        </Helmet>
+  return (
+    <>
+      <Helmet>
+        <title> Kişiler | Percentile </title>
+      </Helmet>
 
-        <Container>
-          <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <Typography variant="h4" gutterBottom>
-              Çocuklar
-            </Typography>
-            <Button href='/savechild' variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-              Yeni çocuk ekle
-            </Button>
-       
-           
-  
-          </Stack>
+      <Container>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+          <Typography variant="h4" gutterBottom>
+            Çocuklar
+          </Typography>
+          <Button href='/savechild' variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+            Yeni çocuk ekle
+          </Button>
 
-          <Card>
-            <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
-            <Scrollbar>
-              <TableContainer sx={{ minWidth: 800 }}>
-                <Table>
-                  <UserListHead
-                    order={order}
-                    orderBy={orderBy}
-                    headLabel={TABLE_HEAD}
-                    rowCount={USERLIST.length}
-                    numSelected={selected.length}
-                    onRequestSort={handleRequestSort}
-                    onSelectAllClick={handleSelectAllClick}
-                  />
-                  <TableBody>
-                    {data.map((row) => {
-                      const { id, name, age, gender, birthday,isVerified } = row;
-                      const selectedUser = selected.indexOf(name) !== -1;
 
-              
+        </Stack>
 
-                      return (
-                        <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
-                          <TableCell padding="checkbox">
-                            <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
-                          </TableCell>
+        <Card>
+          <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} />
 
-                          <TableCell component="th" scope="row" padding="none">
-                            <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt="Remy Sharp" src="../img/avatar_2.jpg"/>
-                              <Typography variant="subtitle2" noWrap>
-                                {name}
-                              </Typography>
-                            </Stack>
-                          </TableCell>
+          <Scrollbar>
+            <TableContainer sx={{ minWidth: 800 }}>
+              <Table>
+                <UserListHead
+                  order={order}
+                  orderBy={orderBy}
+                  headLabel={TABLE_HEAD}
+                  rowCount={USERLIST.length}
+                  numSelected={selected.length}
+                  onRequestSort={handleRequestSort}
+                  onSelectAllClick={handleSelectAllClick}
+                />
+                <TableBody>
+                  {data.map((row) => {
+                    const { id, name, age, gender, birthday, isVerified } = row;
+                    const selectedUser = selected.indexOf(name) !== -1;
 
-                          <TableCell align="left">{gender}</TableCell>
 
-                          <TableCell align="left">{birthday}</TableCell>
 
-                          <TableCell align="left">{age}</TableCell>
+                    return (
+                      <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
+                        <TableCell padding="checkbox">
+                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
+                        </TableCell>
 
-                          <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell component="th" scope="row" padding="none">
+                          <Stack direction="row" alignItems="center" spacing={2}>
+                            <Avatar alt="Remy Sharp" src="/img/avatar_1.png" />
 
-                          {/* <TableCell align="left">
+                            {/* <Box
+                                component="img"
+                                src="/assets/illustrations/illustration_avatar.png"
+                                sx={{ width: 100, position: 'absolute', top: -50 }}
+                              /> */}
+                            <Typography variant="subtitle2" noWrap>
+                              {name}
+                            </Typography>
+                          </Stack>
+                        </TableCell>
+
+                        <TableCell align="left">{gender}</TableCell>
+
+                        <TableCell align="left">{birthday}</TableCell>
+
+                        <TableCell align="left">{age}</TableCell>
+
+                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+
+                        {/* <TableCell align="left">
                             <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
                           </TableCell> */}
 
-                          <TableCell align="right">
-                            <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                              <Iconify icon={'eva:more-vertical-fill'} />
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                    {emptyRows > 0 && (
-                      <TableRow style={{ height: 53 * emptyRows }}>
-                        <TableCell colSpan={6} />
-                      </TableRow>
-                    )}
-                  </TableBody>
-
-                  {isNotFound && (
-                    <TableBody>
-                      <TableRow>
-                        <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
-                          <Paper
-                            sx={{
-                              textAlign: 'center',
-                            }}
-                          >
-                            <Typography variant="h6" paragraph>
-                              Not found
-                            </Typography>
-
-                            <Typography variant="body2">
-                              No results found for &nbsp;
-                              <strong>&quot;{filterName}&quot;</strong>.
-                              <br /> Try checking for typos or using complete words.
-                            </Typography>
-                          </Paper>
+                        <TableCell align="right">
+                          <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+                            <Iconify icon={'eva:more-vertical-fill'} />
+                          </IconButton>
                         </TableCell>
                       </TableRow>
-                    </TableBody>
+                    );
+                  })}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 53 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
                   )}
-                </Table>
-              </TableContainer>
-            </Scrollbar>
+                </TableBody>
 
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={USERLIST.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Card>
-        </Container>
+                {isNotFound && (
+                  <TableBody>
+                    <TableRow>
+                      <TableCell align="center" colSpan={6} sx={{ py: 3 }}>
+                        <Paper
+                          sx={{
+                            textAlign: 'center',
+                          }}
+                        >
+                          <Typography variant="h6" paragraph>
+                            Not found
+                          </Typography>
 
-        <Popover
-          open={Boolean(open)}
-          anchorEl={open}
-          onClose={handleCloseMenu}
-          anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          PaperProps={{
-            sx: {
-              p: 1,
-              width: 140,
-              '& .MuiMenuItem-root': {
-                px: 1,
-                typography: 'body2',
-                borderRadius: 0.75,
-              },
+                          <Typography variant="body2">
+                            No results found for &nbsp;
+                            <strong>&quot;{filterName}&quot;</strong>.
+                            <br /> Try checking for typos or using complete words.
+                          </Typography>
+                        </Paper>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                )}
+              </Table>
+            </TableContainer>
+          </Scrollbar>
+
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={USERLIST.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Card>
+      </Container>
+
+      <Popover
+        open={Boolean(open)}
+        anchorEl={open}
+        onClose={handleCloseMenu}
+        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        PaperProps={{
+          sx: {
+            p: 1,
+            width: 140,
+            '& .MuiMenuItem-root': {
+              px: 1,
+              typography: 'body2',
+              borderRadius: 0.75,
             },
-          }}
-        >
-          <MenuItem>
-            <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-            Edit
-          </MenuItem>
+          },
+        }}
+      >
+        <MenuItem>
+          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+          Edit
+        </MenuItem>
 
-          <MenuItem sx={{ color: 'error.main' }}>
-            <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-            Delete
-          </MenuItem>
-        </Popover>
-      </>
-    );
-  }
+        <MenuItem sx={{ color: 'error.main' }}>
+          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
+          Delete
+        </MenuItem>
+      </Popover>
+    </>
+  );
+}
 

@@ -1,8 +1,11 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Helmet } from 'react-helmet-async';
 import { faker } from '@faker-js/faker';
 // @mui
 import { useTheme } from '@mui/material/styles';
-import { Grid, Container, Typography } from '@mui/material';
+import { Grid, Container, Typography, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Box } from '@mui/system';
 // components
 import Iconify from '../components/iconify';
 // sections
@@ -23,6 +26,50 @@ import {
 export default function DashboardAppPage() {
   const theme = useTheme();
 
+
+  // STATE
+  const [selectLabel, setSelectLabel] = useState("");
+  const [data, setData] = useState([]);
+  const [defaultValue, setDefaultValue] = useState({});
+  const [focusSelect,setFocusSelect] = useState(false);
+
+
+
+  const handleChange = (event) => {
+
+    const { value } = event.target;
+    setSelectLabel(value);
+    
+    fetchDataById(value);
+  };
+
+
+
+  const fetchData = async () => {
+    const { data: response } = await axios.get("/child")
+    setData(response);
+    setDefaultValue(response[0]);
+
+  }
+
+
+  const fetchDataById = async (id) => {
+
+    const { data: response } = await axios.get(`/child/${id}`);
+    setDefaultValue(response);
+
+  }
+
+
+  // component did mount 
+  useEffect(() => {
+    fetchData();
+
+
+  }, [])
+
+
+
   return (
     <>
       <Helmet>
@@ -34,21 +81,45 @@ export default function DashboardAppPage() {
           Saglikli gunler dileriz
         </Typography>
 
+        <Box sx={{ mb: 5, borderColor: 'primary.main', boxShadow: 4, width: 1 / 4, borderRadius: 1 }} >
+          <FormControl fullWidth>
+
+
+            <InputLabel id="input-select-label">{focusSelect ?   defaultValue.name : "Cocuklarim"  }</InputLabel>
+            <Select
+              labelId="input-select-label"
+              id="child-select"
+              value={selectLabel}
+              label={defaultValue.name}
+              onChange={handleChange}
+
+            >
+              {
+                data.map((data) => (
+                  <MenuItem onFocus={()=>!setFocusSelect} key={data.childId} defaultChecked={data.childId} value={data.childId}>{data.name}</MenuItem>
+                ))
+              }
+            </Select>
+          </FormControl>
+        </Box>
+
+
+
         <Grid container spacing={3}>
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
+            <AppWidgetSummary title="Yasinda" total={defaultValue.age>0 ? defaultValue.age : "0"} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+            <AppWidgetSummary title="Dogumdaki Boyu" total={defaultValue.birthHeight} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+            <AppWidgetSummary title="Item Orders" total={defaultValue.birthWeight} color="warning" icon={'ant-design:windows-filled'} />
           </Grid>
 
           <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
+            <AppWidgetSummary title="Bug Reports" total={5678} color="error" icon={'ant-design:bug-filled'} />
           </Grid>
 
           <Grid item xs={12} md={6} lg={8}>
