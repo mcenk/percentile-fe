@@ -7,23 +7,23 @@ const icon = (name) => <SvgColor src={`/assets/icons/navbar/${name}.svg`} sx={{ 
 
 const navConfig = [
   {
-    title: 'Anasayfa',
-    path: '/anasayfa/app',
+    title: 'Home',
+    path: '/home/app',
     icon: icon('ic_analytics'),
   },
   {
-    title: 'Çocuklar',
-    path: '/anasayfa/cocuklar',
+    title: 'My Children',
+    path: '/home/mychildren',
     icon: icon('ic_user'),
   },
   {
-    title: 'product',
-    path: '/anasayfa/products',
+    title: 'Calculate',
+    path: '/home/percentile_calculator',
     icon: icon('ic_cart'),
   },
   {
     title: 'blog',
-    path: '/anasayfa/blog',
+    path: '/home/blog',
     icon: icon('ic_blog'),
   },
   {

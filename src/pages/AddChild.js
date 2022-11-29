@@ -1,23 +1,27 @@
 import * as React from 'react';
+import axios from 'axios';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { Box, createTheme, InputAdornment, MenuItem, Paper, ThemeProvider } from '@mui/material';
-import { DatePicker, LoadingButton } from '@mui/lab';
-import axios from 'axios';
-import dayjs, { Dayjs } from 'dayjs';
+import { Helmet } from 'react-helmet-async';
+import {  LoadingButton } from '@mui/lab';
+import dayjs from 'dayjs';
+import { Player } from '@lottiefiles/react-lottie-player';
+import AddAnimation from '../lottie/addchild.json';
+
 
 
 
 
 const genders = [
   {
-    value: 'Kız',
-    label: 'Kız',
+    value: 'Male',
+    label: 'Male',
   },
   {
-    value: 'Erkek',
-    label: 'Erkek',
+    value: 'Female',
+    label: 'Female',
   }
 
 ];
@@ -83,30 +87,38 @@ export default function SaveChild()  {
     
   
      <ThemeProvider theme={theme}>
-
+   <Helmet>
+        <title> Home | Percentile </title>
+      </Helmet>
 
       <Paper variant="outlined" sx={{
+        borderRadius: 5,
         pt: 20,
         p: 2,
         marginTop: '100px',
         margin: 'auto',
         maxWidth: 800,
+        boxShadow: 6,
         // flexGrow: 1,
         backgroundColor: (theme) =>
           theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
       }} >
+          <Player src={ AddAnimation } autoplay loop style={{marginBottom: '20px',height: '250px', width: '250px' }} />
 
-        <Typography variant="h6" gutterBottom>
-          Cocuk Ekle
-        </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        {/* <Typography variant="h6" gutterBottom textAlign={"center"}>
+         Add New Child
+        </Typography> */}
+        <Box component="form" noValidate onSubmit={handleSubmit} sx={{  }}>
+
+
         <Grid container spacing={3}>
+
           <Grid item xs={12} sm={12}>
             <TextField
               required
               id="name"
               name="name"
-              label='Ad soyad'
+              label='Name'
               fullWidth
               autoComplete="given-name"
               variant="outlined"
@@ -118,7 +130,7 @@ export default function SaveChild()  {
               id="outlined-select-gender"
               select
               fullWidth
-              label="Cinsiyet"
+              label="Gender"
               value={gender}
               onChange={handleChange}
             >
@@ -134,7 +146,7 @@ export default function SaveChild()  {
           <Grid item xs={12} sm={6}>
             <TextField
               id="date"
-              label="Doğum Tarihi"
+              label="Birthday"
               type="date"
               fullWidth
               defaultValue="2022-01-01"
@@ -150,9 +162,9 @@ export default function SaveChild()  {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Doğum kilosunu giriniz"
-              id="birthweight"
-              name='birthweight'
+              label="Birth Weight"
+              id="birth-weight"
+              name='Birth_Weight'
               fullWidth
               // sx={{ m: 1, width: '25ch' }}
               InputProps={{
@@ -162,9 +174,9 @@ export default function SaveChild()  {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Doğum boyunu giriniz"
-              id="birthheight"
-              name='birthheight'
+              label="Birth Height"
+              id="birth-height"
+              name='Birth_Height'
               fullWidth
               // sx={{ m: 1, width: '25ch' }}
               InputProps={{
@@ -176,7 +188,7 @@ export default function SaveChild()  {
             <TextField
               id="childInfo"
               name="childInfo"
-              label="Eklemek istediğiniz bilgi var mı?"
+              label="Is there a note you want to add?"
               fullWidth
               variant="outlined"
             />
@@ -188,7 +200,7 @@ export default function SaveChild()  {
             maxWidth: 800,
           }}>
             <LoadingButton  fullWidth size="large" type="submit" variant="contained" >
-              Giriş Yap
+              Save
             </LoadingButton>
           </Grid>
           {/* <Grid >

@@ -40,11 +40,11 @@ import USERLIST from '../_mock/user';
 // ----------------------------------------------------------------------
 
 const TABLE_HEAD = [
-  { id: 'name', label: 'Ad Soyad', alignRight: false },
-  { id: 'company', label: 'Cinsiyet', alignRight: false },
-  { id: 'role', label: 'Doğum Tarihi', alignRight: false },
-  { id: 'isVerified', label: 'Yas', alignRight: false },
-  { id: 'status', label: 'Durum', alignRight: false },
+  { id: 'name', label: 'Name', alignRight: false },
+  { id: 'company', label: 'Gender', alignRight: false },
+  { id: 'role', label: 'Birthday', alignRight: false },
+  { id: 'isVerified', label: 'Age', alignRight: false },
+  { id: 'status', label: 'Status', alignRight: false },
   { id: '' },
 ];
 // const TABLE_HEAD = [
@@ -202,16 +202,14 @@ export default function UserPage() {
   return (
     <>
       <Helmet>
-        <title> Kişiler | Percentile </title>
+        <title>My Children | Percentile  </title>
       </Helmet>
 
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            Çocuklar
-          </Typography>
-          <Button href='/savechild' variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            Yeni çocuk ekle
+        <Stack direction="row" alignItems="center" justifyContent="end" mb={5}>
+      
+          <Button href='/home/addchild' variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
+            Add New Child
           </Button>
 
 

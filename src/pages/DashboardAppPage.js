@@ -73,7 +73,7 @@ export default function DashboardAppPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | Minimal UI </title>
+        <title> Home | Percentile </title>
       </Helmet>
 
       <Container maxWidth="xl">
@@ -91,11 +91,11 @@ export default function DashboardAppPage() {
               id="child-select"
               value={selectLabel}
               label={defaultValue.name}
-              onChange={handleChange}
-
-            >
+              onChange={handleChange}>
+              
               {
                 data.map((data) => (
+                  // bu satiri duzenle
                   <MenuItem onFocus={()=>!setFocusSelect} key={data.childId} defaultChecked={data.childId} value={data.childId}>{data.name}</MenuItem>
                 ))
               }
@@ -106,6 +106,7 @@ export default function DashboardAppPage() {
 
 
         <Grid container spacing={3}>
+
           <Grid item xs={12} sm={6} md={3}>
             <AppWidgetSummary title="Yasinda" total={defaultValue.age>0 ? defaultValue.age : "0"} color="info" icon={'ant-design:apple-filled'} />
           </Grid>
