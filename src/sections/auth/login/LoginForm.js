@@ -2,14 +2,30 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @mui
-import { Link, Stack, IconButton, InputAdornment, TextField, Grid } from '@mui/material';
+import { Link, Stack, IconButton, InputAdornment, TextField, Grid, Typography, Container } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // components
 import Iconify from '../../../components/iconify';
 
 
+
 // ----------------------------------------------------------------------
 
+
+
+function Copyright(props) {
+  return (
+
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
+      {'Copyright © '}
+      <Link color="inherit" href="https://www.linkedin.com/in/mustafacenk/">
+        mcenk
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
+}
 export default function LoginForm() {
 
 
@@ -24,18 +40,20 @@ export default function LoginForm() {
 
   return (
     <>
-      <Stack spacing={3}>
+      <Container spacing={3}>
         <Grid container spacing={2}>
           <Grid item xs={12} >
             <TextField name="email"
               fullWidth
+              required
               label="Email" />
 
           </Grid>
           <Grid item xs={12}>
             <TextField
               name="password"
-              label="Şifre"
+              label="Password"
+              required
               fullWidth
               type={showPassword ? 'text' : 'password'}
               InputProps={{
@@ -50,18 +68,20 @@ export default function LoginForm() {
             />
           </Grid>
         </Grid>
-      </Stack>
+      </Container>
 
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
 
         <Link variant="subtitle2" underline="hover">
-          Şifrenizi unuttunuz mu?
+          Forgot password?
         </Link>
       </Stack>
 
       <LoadingButton fullWidth size="large" type="submit" variant="contained" onClick={handleClick}>
-        Giriş Yap
+        Login
       </LoadingButton>
+
+
     </>
   );
 }

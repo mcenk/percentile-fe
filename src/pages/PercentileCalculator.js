@@ -73,7 +73,7 @@ export default function PercentileCalculator() {
                                         <InputLabel id="calcutalator-select-label">My Children</InputLabel>
                                         <Select
                                             labelId="calculator-select-label"
-                                            id="calculator-select"
+                                            id="calc-select"
                                             value={age}
                                             // autoFocus
                                             label="My Children"
@@ -113,8 +113,8 @@ export default function PercentileCalculator() {
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <TextField
-                                        id="date"
-                                        label="Birthday"
+                                        id="calc-date"
+                                        label="Calculation Date"
                                         fullWidth
                                         type="date"
                                         name='Calc_Date'
