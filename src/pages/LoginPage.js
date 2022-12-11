@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import { Helmet } from 'react-helmet-async';
 // @mui
@@ -40,10 +41,12 @@ export default function LoginPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
+    const body={
+      username: data.get('email'),
       password: data.get('password'),
-    });
+    };
+
+    axios.post('/login/auth',{}, {auth: body});
   };
 
 
